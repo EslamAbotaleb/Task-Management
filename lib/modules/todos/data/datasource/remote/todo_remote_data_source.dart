@@ -53,12 +53,11 @@ class TodoRemoteDataSourceImplementation implements TodoRemoteDataSource {
       "todo": todo.todo,
       "userId": userId,
     };
-
     final response = await client.patch(
       Uri.parse("$BASE_URL/todos/$todoId"),
       body: body,
     );
-
+      logger.d("response:$response");
     if (response.statusCode == 200) {
       return Future.value(unit);
     } else {

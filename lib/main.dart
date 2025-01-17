@@ -3,7 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:task_mangement/core/theme/app_theme.dart';
 import 'package:task_mangement/modules/authentication/presentation/bloc/auth/bloc/auth_bloc.dart';
 import 'package:task_mangement/modules/authentication/presentation/screens/login_page.dart';
-import 'package:task_mangement/modules/todos/presentation/screens/todo/todo_page.dart';
+import 'package:task_mangement/modules/todos/presentation/crud_todo_bloc/bloc/crud_bloc.dart';
+import 'package:task_mangement/modules/todos/presentation/screens/todo/list/todo_page.dart';
 import 'core/util/settings.dart';
 import 'dependency_container/dependency_injection.dart' as di;
 import 'modules/todos/presentation/todo_bloc/bloc/todos_bloc.dart';
@@ -26,6 +27,7 @@ class TaskManagementApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (_) => di.sl<TodosBloc>()..add(GetAllTodoEvent())),
+        BlocProvider(create: (_) => di.sl<CrudBloc>()),
         BlocProvider(create: (_) => di.sl<AuthBloc>()),
       ],
       child: MaterialApp(

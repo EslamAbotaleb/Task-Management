@@ -11,9 +11,13 @@ import 'package:task_mangement/modules/todos/data/datasource/remote/todo_remote_
 import 'package:task_mangement/modules/todos/data/repositories/todo_repository_implement.dart';
 import 'package:task_mangement/modules/todos/domain/repositories/todo_repository.dart';
 import 'package:task_mangement/modules/todos/domain/usecases/todo_usecase.dart';
+import 'package:task_mangement/modules/todos/presentation/crud_todo_bloc/bloc/crud_bloc.dart';
 import '../core/network/abstract/network_abstract.dart';
 import '../core/network/network_info.dart';
 import '../modules/authentication/domain/repositories/auth_repository.dart';
+import '../modules/todos/domain/usecases/add_todo.dart';
+import '../modules/todos/domain/usecases/delete_todo.dart';
+import '../modules/todos/domain/usecases/update_todo.dart';
 import '../modules/todos/presentation/todo_bloc/bloc/todos_bloc.dart';
 
 final sl = GetIt.instance;
@@ -22,31 +26,35 @@ Future<void> init() async {
 
   // Bloc
   sl.registerFactory(() => AuthBloc(loginUsecase: sl()));
- sl.registerFactory(() => TodosBloc(todosByPaginateUseCase: sl()));
- 
+  sl.registerFactory(() => TodosBloc(todosByPaginateUseCase: sl()));
+  sl.registerFactory(
+      () => CrudBloc(addTodo: sl(), updateTodo: sl(), deleteTodo: sl()));
+
   // UseCase
   sl.registerLazySingleton(() => AuthLoginUsecase(sl()));
-    sl.registerLazySingleton(() => GetTodosByPaginateUseCase(sl()));
+  sl.registerLazySingleton(() => GetTodosByPaginateUseCase(sl()));
+  sl.registerLazySingleton(() => AddTodoUsecase(sl()));
+  sl.registerLazySingleton(() => DeleteTodoUsecase(sl()));
+  sl.registerLazySingleton(() => UpdateTodoUsecase(sl()));
 
   // Repository
   sl.registerLazySingleton<AuthenticationLoginRepository>(
       () => AuthLoginRepositoryImplement(authenticationDataSource: sl()));
-        sl.registerLazySingleton<TodoRepository>(() => TodoRepositoryImplement(
-      remoteDataSource: sl(), networkInfo: sl()));
+  sl.registerLazySingleton<TodoRepository>(
+      () => TodoRepositoryImplement(remoteDataSource: sl(), networkInfo: sl()));
 
   // DataSource
   sl.registerLazySingleton<AuthRemoteDataSource>(
       () => AuthRemoteDataSourceImplementation(clientSide: sl()));
-      sl.registerLazySingleton<TodoRemoteDataSource>(
+  sl.registerLazySingleton<TodoRemoteDataSource>(
       () => TodoRemoteDataSourceImplementation(client: sl()));
 
   // Core
-    sl.registerLazySingleton<NetworkInfo>(() => NetworkInfoImpl(sl()));
+  sl.registerLazySingleton<NetworkInfo>(() => NetworkInfoImpl(sl()));
 
   // Client Side
   sl.registerLazySingleton(() => http.Client());
 
   //Internet
-    sl.registerLazySingleton(() => InternetConnectionChecker.instance);
-
+  sl.registerLazySingleton(() => InternetConnectionChecker.instance);
 }

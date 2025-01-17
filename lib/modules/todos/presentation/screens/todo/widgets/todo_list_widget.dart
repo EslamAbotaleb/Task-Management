@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:task_mangement/core/util/widgets/loading_circle_widget.dart';
 import 'package:task_mangement/modules/todos/domain/entities/todo_entity.dart';
+import 'package:task_mangement/modules/todos/presentation/screens/todo/crud/dialog_crud_widget.dart';
 
 class TodoListWidget extends StatelessWidget {
   final List<TodoEntity> todos;
@@ -37,7 +38,17 @@ class TodoListWidget extends StatelessWidget {
                 style: const TextStyle(fontSize: 14, color: Colors.grey),
               ),
               trailing: const Icon(Icons.arrow_forward_ios, size: 16),
-              onTap: () {},
+              onTap: () {
+                showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return DialogCrudWidget(
+                      isUpdateTodo: true,
+                      todoEntity: todos[index],
+                    );
+                  },
+                );
+              },
             ),
           );
         } else {
