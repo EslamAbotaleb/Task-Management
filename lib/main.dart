@@ -2,16 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:task_mangement/core/theme/app_theme.dart';
 import 'package:task_mangement/modules/authentication/presentation/bloc/auth/bloc/auth_bloc.dart';
+import 'core/util/settings.dart';
 import 'dependency_container/dependency_injection.dart' as di;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await di.init();
-  runApp(const MainApp());
+  final bool isLoggedIn = await checkUserLoggedIn();
+  runApp(TaskManagementApp(
+    isLoggedIn: isLoggedIn,
+  ));
 }
 
-class MainApp extends StatelessWidget {
-  const MainApp({super.key});
+class TaskManagementApp extends StatelessWidget {
+  final bool isLoggedIn;
+  const TaskManagementApp({super.key, required this.isLoggedIn});
 
   @override
   Widget build(BuildContext context) {
