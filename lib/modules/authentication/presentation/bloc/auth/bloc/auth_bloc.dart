@@ -4,8 +4,7 @@ import 'package:equatable/equatable.dart';
 import 'package:task_mangement/core/error/failures.dart';
 import 'package:task_mangement/modules/authentication/domain/entities/login_entity.dart';
 import 'package:task_mangement/modules/authentication/domain/usecases/auth_login_usecase.dart';
-
-import '../../../../../../core/util/settings.dart';
+import '../../../../../../core/util/constants.dart';
 
 part 'auth_event.dart';
 part 'auth_state.dart';
