@@ -19,12 +19,19 @@ dependencies:
   internet_connection_checker: ^3.0.1
   shared_preferences: ^2.3.5
   flutter_secure_storage: ^9.2.4
-  logger: ^1.0.0   
+  logger: ^1.0.0
+  # bloc_test: ^10.0.0
+  # mockito: ^5.4.0
+  # build_runner: ^2.4.13
+    
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^4.0.0
+  mocktail: ^1.0.4
+  # mockito: ^5.4.0
+  bloc_test: ^10.0.0
 
 flutter:
   uses-material-design: true

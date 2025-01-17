@@ -19,6 +19,8 @@ class AuthLoginRepositoryImplement implements AuthenticationLoginRepository {
       return Right(loginResult);
     } on ServerException {
       return Left(ServerFailure());
+    } on InvalidCredentialsException {
+      return Left(InvalidCredentialsFailure());
     }
   }
 }

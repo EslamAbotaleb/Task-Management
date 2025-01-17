@@ -6,3 +6,18 @@ class ServerFailure extends Failure {
   @override
   List<Object?> get props => [];
 }
+
+class OfflineFailure extends Failure {
+  @override
+  List<Object?> get props => [];
+}
+
+class NetworkFailure extends Failure {
+  @override
+  List<Object?> get props => [];
+}
+
+class InvalidCredentialsFailure extends Failure {
+  @override
+  List<Object?> get props => [];
+}
