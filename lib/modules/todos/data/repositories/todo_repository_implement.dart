@@ -6,10 +6,9 @@ import 'package:task_mangement/modules/todos/domain/repositories/todo_repository
 
 import '../../../../core/error/exceptions.dart';
 import '../../../../core/network/abstract/network_abstract.dart';
+import '../models/todo_model.dart';
 
-
-typedef Future<Unit> CRUDTodo();
-
+typedef CRUDTodo = Future<Unit> Function();
 
 class TodoRepositoryImplement implements TodoRepository {
   final TodoRemoteDataSource remoteDataSource;
@@ -19,9 +18,11 @@ class TodoRepositoryImplement implements TodoRepository {
       {required this.remoteDataSource, required this.networkInfo});
 
   @override
-  Future<Either<Failure, Unit>> addTodo(TodoEntity todo) {
-    // TODO: implement addTodo
-    throw UnimplementedError();
+  Future<Either<Failure, Unit>> addTodo(TodoEntity todo) async {
+    final TodoModel todoModel = TodoModel(id: todo.id, todo: todo.todo);
+    return await _getMessage(() {
+      return remoteDataSource.addTodo(todoModel);
+    });
   }
 
   @override
@@ -54,11 +55,10 @@ class TodoRepositoryImplement implements TodoRepository {
     }
   }
 
-   Future<Either<Failure, Unit>> _getMessage(
-      CRUDTodo deleteOrUpdateOrAddTodo) async {
+  Future<Either<Failure, Unit>> _getMessage(CRUDTodo crudTodo) async {
     if (await networkInfo.isConnected) {
       try {
-        await deleteOrUpdateOrAddTodo();
+        await crudTodo();
         return const Right(unit);
       } on ServerException {
         return Left(ServerFailure());
