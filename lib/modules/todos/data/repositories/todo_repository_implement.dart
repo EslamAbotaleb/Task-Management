@@ -1,21 +1,26 @@
 import 'package:dartz/dartz.dart';
 import 'package:task_mangement/core/error/failures.dart';
+import 'package:task_mangement/modules/todos/data/datasource/local/abstract/local_abstract.dart';
 import 'package:task_mangement/modules/todos/data/datasource/remote/abstract/todo_abstract_remote.dart';
 import 'package:task_mangement/modules/todos/domain/entities/todo_entity.dart';
 import 'package:task_mangement/modules/todos/domain/repositories/todo_repository.dart';
 
 import '../../../../core/error/exceptions.dart';
 import '../../../../core/network/abstract/network_abstract.dart';
+import '../../../../core/util/settings.dart';
 import '../models/todo_model.dart';
 
 typedef CRUDTodo = Future<Unit> Function();
 
 class TodoRepositoryImplement implements TodoRepository {
   final TodoRemoteDataSource remoteDataSource;
+  final TodoLocalDataSource localDataSource;
   final NetworkInfo networkInfo;
 
   TodoRepositoryImplement(
-      {required this.remoteDataSource, required this.networkInfo});
+      {required this.remoteDataSource,
+      required this.localDataSource,
+      required this.networkInfo});
 
   @override
   Future<Either<Failure, Unit>> addTodo(TodoEntity todo) async {
@@ -49,12 +54,24 @@ class TodoRepositoryImplement implements TodoRepository {
           pageNumber: pageNumber,
           limit: limit,
         );
+        // Save fetched data to local storage for offline use
+        await localDataSource.cacheTodos(result);
+
         return Right(result);
       } on ServerException {
         return Left(ServerFailure());
       }
     } else {
-      return Left(ServerFailure());
+      try {
+        // Fetch data from local storage if no network is available
+        final localResult = await localDataSource.getTodosByPaginate(
+          pageNumber: pageNumber,
+          limit: limit,
+        );
+        return Right(localResult);
+      } catch (e) {
+        return Left(EmptyCacheFailure()); // Handle cache-related errors
+      }
     }
   }
 
