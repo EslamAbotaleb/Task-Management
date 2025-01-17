@@ -5,8 +5,11 @@ import '../bloc/auth/bloc/auth_bloc.dart';
 
 class FormLoginWidget extends StatelessWidget {
   FormLoginWidget({super.key});
+
   final TextEditingController _usernameController = TextEditingController();
+
   final TextEditingController _passwordController = TextEditingController();
+
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override

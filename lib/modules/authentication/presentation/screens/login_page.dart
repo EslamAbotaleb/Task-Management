@@ -13,7 +13,7 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Login'),
+        title: const Text('Login', style: TextStyle(color: Colors.white),),
       ),
       body: const BodyLoginWidget(),
     );
