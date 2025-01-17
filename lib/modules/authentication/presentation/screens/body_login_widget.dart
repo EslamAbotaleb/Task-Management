@@ -18,7 +18,6 @@ class BodyLoginWidget extends StatelessWidget {
           if (state is AuthLoading) {
             return const LoadingCircularProgressWidget();
           } else if (state is AuthSuccess) {
-            print("gerjiogjregreigoerhgerhgeh$state");
             // Navigate to the todos screen after a successful login
           } else if (state is AuthError) {
             return MessageWidget(message: state.message); // Show error message
