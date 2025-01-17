@@ -8,7 +8,7 @@ import '../../../../../../core/util/widgets/loading_circle_widget.dart';
 import '../../../../../../core/util/widgets/snackbar_message.dart';
 import '../../../../domain/entities/todo_entity.dart';
 import '../../../crud_todo_bloc/bloc/crud_bloc.dart';
-import 'add_update_form_widget.dart';
+import 'crud_form_widget.dart';
 
 class DialogCrudWidget extends StatelessWidget {
   final TodoEntity? todoEntity;
@@ -61,7 +61,7 @@ class DialogCrudWidget extends StatelessWidget {
               if (state is LoadingCrudState) {
                 return const LoadingCircularProgressWidget();
               }
-              return AddUpdateFormWidget(
+              return CRUDTodoWidget(
                 isUpdateTodo: isUpdateTodo,
                 todo: todoEntity,
               );

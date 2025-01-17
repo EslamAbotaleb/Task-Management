@@ -4,21 +4,22 @@ import 'package:task_mangement/modules/todos/domain/entities/todo_entity.dart';
 import 'package:task_mangement/modules/todos/presentation/crud_todo_bloc/bloc/crud_bloc.dart';
 
 import '../../../../../../core/theme/app_theme.dart';
+import 'delete/delete_todo_btn_widget.dart';
 
-class AddUpdateFormWidget extends StatefulWidget {
+class CRUDTodoWidget extends StatefulWidget {
   final bool isUpdateTodo;
   final TodoEntity? todo;
-  const AddUpdateFormWidget({
+  const CRUDTodoWidget({
     super.key,
     required this.isUpdateTodo,
     this.todo,
   });
 
   @override
-  State<AddUpdateFormWidget> createState() => _FormWidgetState();
+  State<CRUDTodoWidget> createState() => _FormWidgetState();
 }
 
-class _FormWidgetState extends State<AddUpdateFormWidget> {
+class _FormWidgetState extends State<CRUDTodoWidget> {
   final _formKey = GlobalKey<FormState>();
   TextEditingController _todoController = TextEditingController();
 
@@ -81,24 +82,52 @@ class _FormWidgetState extends State<AddUpdateFormWidget> {
             const SizedBox(
               height: 16.0,
             ),
-            ElevatedButton.icon(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: primaryColor,
-                ),
-                onPressed: validateFormThenUpdateOrAddTodo,
-                icon: widget.isUpdateTodo
-                    ? const Icon(
-                        Icons.edit,
-                        color: Colors.white,
-                      )
-                    : const Icon(
-                        Icons.add,
-                        color: Colors.white,
+            widget.isUpdateTodo == true
+                ? Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                     DeleteTodoBtnWidget(todoId: widget.todo?.id ?? 0,),
+                      const SizedBox(
+                        width: 16.0,
                       ),
-                label: Text(
-                  widget.isUpdateTodo ? "Edit" : "Add",
-                  style: const TextStyle(color: Colors.white),
-                ))
+                      ElevatedButton.icon(
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: primaryColor,
+                          ),
+                          onPressed: validateFormThenUpdateOrAddTodo,
+                          icon: widget.isUpdateTodo
+                              ? const Icon(
+                                  Icons.edit,
+                                  color: Colors.white,
+                                )
+                              : const Icon(
+                                  Icons.add,
+                                  color: Colors.white,
+                                ),
+                          label: Text(
+                            widget.isUpdateTodo ? "Edit" : "Add",
+                            style: const TextStyle(color: Colors.white),
+                          ))
+                    ],
+                  )
+                : ElevatedButton.icon(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: primaryColor,
+                    ),
+                    onPressed: validateFormThenUpdateOrAddTodo,
+                    icon: widget.isUpdateTodo
+                        ? const Icon(
+                            Icons.edit,
+                            color: Colors.white,
+                          )
+                        : const Icon(
+                            Icons.add,
+                            color: Colors.white,
+                          ),
+                    label: Text(
+                      widget.isUpdateTodo ? "Edit" : "Add",
+                      style: const TextStyle(color: Colors.white),
+                    ))
           ]),
     );
   }
