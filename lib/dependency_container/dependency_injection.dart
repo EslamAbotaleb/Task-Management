@@ -1,6 +1,5 @@
 import 'package:get_it/get_it.dart';
 import 'package:http/http.dart' as http;
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:task_mangement/modules/authentication/data/abstract/auth_abstract.dart';
 import 'package:task_mangement/modules/authentication/data/datasource/remote/auth_remote_data_source.dart';
 import 'package:task_mangement/modules/authentication/data/repositories/auth_repository_implement.dart';
@@ -51,8 +50,6 @@ Future<void> init() async {
       () => AuthRemoteDataSourceImplementation(clientSide: sl()));
   sl.registerLazySingleton<TodoRemoteDataSource>(
       () => TodoRemoteDataSourceImplementation(client: sl()));
-  sl.registerLazySingleton<TodoLocalDataSource>(
-      () => TodoLocalDataSourceImplementation(sharedPreferences: sl()));
 
   // Core
   sl.registerLazySingleton<NetworkInfo>(() => NetworkInfoImpl(sl()));
@@ -62,8 +59,4 @@ Future<void> init() async {
 
   //Internet
   sl.registerLazySingleton(() => InternetConnectionChecker.instance);
-
-  //Local Storage
-  final sharedPreferences = await SharedPreferences.getInstance();
-  sl.registerLazySingleton(() => sharedPreferences);
 }
