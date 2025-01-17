@@ -1,12 +1,15 @@
 import 'package:dartz/dartz.dart';
 import 'package:task_mangement/core/error/failures.dart';
 import 'package:task_mangement/modules/todos/data/datasource/remote/abstract/todo_abstract_remote.dart';
-import 'package:task_mangement/modules/todos/data/datasource/remote/todo_remote_data_source.dart';
 import 'package:task_mangement/modules/todos/domain/entities/todo_entity.dart';
 import 'package:task_mangement/modules/todos/domain/repositories/todo_repository.dart';
 
 import '../../../../core/error/exceptions.dart';
 import '../../../../core/network/abstract/network_abstract.dart';
+
+
+typedef Future<Unit> CRUDTodo();
+
 
 class TodoRepositoryImplement implements TodoRepository {
   final TodoRemoteDataSource remoteDataSource;
@@ -48,6 +51,20 @@ class TodoRepositoryImplement implements TodoRepository {
       }
     } else {
       return Left(ServerFailure());
+    }
+  }
+
+   Future<Either<Failure, Unit>> _getMessage(
+      CRUDTodo deleteOrUpdateOrAddTodo) async {
+    if (await networkInfo.isConnected) {
+      try {
+        await deleteOrUpdateOrAddTodo();
+        return const Right(unit);
+      } on ServerException {
+        return Left(ServerFailure());
+      }
+    } else {
+      return Left(OfflineFailure());
     }
   }
 }
