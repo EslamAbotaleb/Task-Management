@@ -32,15 +32,38 @@ class TodoRemoteDataSourceImplementation implements TodoRemoteDataSource {
   }
 
   @override
-  Future<Unit> deleteTodo(int todoId) {
-    // TODO: implement deleteTodo
-    throw UnimplementedError();
+  Future<Unit> deleteTodo(int todoId) async {
+    final response = await client.delete(
+      Uri.parse("$BASE_URL/todos/${todoId.toString()}"),
+      headers: {"Content-Type": "application/json"},
+    );
+
+    if (response.statusCode == 200) {
+      return Future.value(unit);
+    } else {
+      throw ServerException();
+    }
   }
 
   @override
-  Future<Unit> updateTodo(TodoModel todo) {
-    // TODO: implement updateTodo
-    throw UnimplementedError();
+  Future<Unit> updateTodo(TodoModel todo) async {
+    final String? userId = await secureStorage.read(key: 'userId');
+    final todoId = todo.id.toString();
+    final body = {
+      "todo": todo.todo,
+      "userId": userId,
+    };
+
+    final response = await client.patch(
+      Uri.parse("$BASE_URL/todos/$todoId"),
+      body: body,
+    );
+
+    if (response.statusCode == 200) {
+      return Future.value(unit);
+    } else {
+      throw ServerException();
+    }
   }
 
   @override

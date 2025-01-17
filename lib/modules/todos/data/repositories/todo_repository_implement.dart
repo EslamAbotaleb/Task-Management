@@ -26,15 +26,18 @@ class TodoRepositoryImplement implements TodoRepository {
   }
 
   @override
-  Future<Either<Failure, Unit>> deleteTodo(int id) {
-    // TODO: implement deleteTodo
-    throw UnimplementedError();
+  Future<Either<Failure, Unit>> deleteTodo(int id) async {
+    return await _getMessage(() {
+      return remoteDataSource.deleteTodo(id);
+    });
   }
 
   @override
-  Future<Either<Failure, Unit>> updateTodo(TodoEntity todo) {
-    // TODO: implement updateTodo
-    throw UnimplementedError();
+  Future<Either<Failure, Unit>> updateTodo(TodoEntity todo) async {
+    final TodoModel todoModel = TodoModel(id: todo.id, todo: todo.todo);
+    return await _getMessage(() {
+      return remoteDataSource.updateTodo(todoModel);
+    });
   }
 
   @override
