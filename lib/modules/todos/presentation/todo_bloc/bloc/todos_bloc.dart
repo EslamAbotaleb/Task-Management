@@ -46,7 +46,6 @@ class TodosBloc extends Bloc<TodosEvent, TodosState> {
           },
         );
       }
-
       if (event is CheckIfNeedMoreTodoEvent) {
         if (event.index >= todos.length - nextPageTrigger && !isLastPage) {
           add(GetAllTodoEvent()); // Trigger fetching the next page
@@ -54,12 +53,10 @@ class TodosBloc extends Bloc<TodosEvent, TodosState> {
       }
     });
   }
-
   String _mapFailtureToMessage(Failure failure) {
     switch (failure.runtimeType) {
       case ServerFailure _:
         return SERVER_FAILURE_MESSAGE;
-
       case OfflineFailure _:
         return OFFLINE_FAILURE_MESSAGE;
       default:
