@@ -7,7 +7,7 @@ import '../../../../core/error/failures.dart';
 class GetTodosByPaginateUseCase {
   final TodoRepository repository;
 
-  GetTodosByPaginateUseCase({required this.repository});
+  GetTodosByPaginateUseCase(this.repository);
 
   Future<Either<Failure, List<TodoEntity>>> call({
     required int pageNumber,

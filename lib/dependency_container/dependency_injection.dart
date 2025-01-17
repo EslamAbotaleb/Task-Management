@@ -6,9 +6,15 @@ import 'package:task_mangement/modules/authentication/data/repositories/auth_rep
 import 'package:task_mangement/modules/authentication/domain/usecases/auth_login_usecase.dart';
 import 'package:task_mangement/modules/authentication/presentation/bloc/auth/bloc/auth_bloc.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
+import 'package:task_mangement/modules/todos/data/datasource/remote/abstract/todo_abstract_remote.dart';
+import 'package:task_mangement/modules/todos/data/datasource/remote/todo_remote_data_source.dart';
+import 'package:task_mangement/modules/todos/data/repositories/todo_repository_implement.dart';
+import 'package:task_mangement/modules/todos/domain/repositories/todo_repository.dart';
+import 'package:task_mangement/modules/todos/domain/usecases/todo_usecase.dart';
 import '../core/network/abstract/network_abstract.dart';
 import '../core/network/network_info.dart';
 import '../modules/authentication/domain/repositories/auth_repository.dart';
+import '../modules/todos/presentation/todo_bloc/bloc/todos_bloc.dart';
 
 final sl = GetIt.instance;
 Future<void> init() async {
@@ -16,17 +22,23 @@ Future<void> init() async {
 
   // Bloc
   sl.registerFactory(() => AuthBloc(loginUsecase: sl()));
-
+ sl.registerFactory(() => TodosBloc(todosByPaginateUseCase: sl()));
+ 
   // UseCase
   sl.registerLazySingleton(() => AuthLoginUsecase(sl()));
+    sl.registerLazySingleton(() => GetTodosByPaginateUseCase(sl()));
 
   // Repository
   sl.registerLazySingleton<AuthenticationLoginRepository>(
       () => AuthLoginRepositoryImplement(authenticationDataSource: sl()));
+        sl.registerLazySingleton<TodoRepository>(() => TodoRepositoryImplement(
+      remoteDataSource: sl(), networkInfo: sl()));
 
   // DataSource
   sl.registerLazySingleton<AuthRemoteDataSource>(
       () => AuthRemoteDataSourceImplementation(clientSide: sl()));
+      sl.registerLazySingleton<TodoRemoteDataSource>(
+      () => TodoRemoteDataSourceImplementation(client: sl()));
 
   // Core
     sl.registerLazySingleton<NetworkInfo>(() => NetworkInfoImpl(sl()));
