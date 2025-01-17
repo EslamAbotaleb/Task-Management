@@ -16,9 +16,19 @@ class TodoRemoteDataSourceImplementation implements TodoRemoteDataSource {
   TodoRemoteDataSourceImplementation({required this.client});
 
   @override
-  Future<Unit> addTodo(TodoModel todo) {
-    // TODO: implement addTodo
-    throw UnimplementedError();
+  Future<Unit> addTodo(TodoModel todo) async {
+    final String? userId = await secureStorage.read(key: 'userId');
+    final body = {
+      "todo": todo.todo,
+      "userId": userId,
+    };
+    final response =
+        await client.post(Uri.parse("$BASE_URL/todos/add"), body: body);
+    if (response.statusCode == 201) {
+      return Future.value(unit);
+    } else {
+      throw ServerException();
+    }
   }
 
   @override
