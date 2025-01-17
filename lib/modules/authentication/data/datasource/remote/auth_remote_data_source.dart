@@ -1,9 +1,9 @@
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:task_mangement/core/util/constants.dart';
 import 'package:task_mangement/modules/authentication/domain/entities/login_entity.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import '../../../../../core/error/exceptions.dart';
-import '../../../../../core/util/settings.dart';
 import '../../abstract/auth_abstract.dart';
 
 class AuthRemoteDataSourceImplementation implements AuthRemoteDataSource {

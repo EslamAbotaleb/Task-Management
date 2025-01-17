@@ -1,10 +1,6 @@
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:logger/logger.dart';
+import 'package:task_mangement/core/util/constants.dart';
 
-const BASE_URL = "https://dummyjson.com";
-const String SERVER_FAILURE_MESSAGE = 'Please try again later .';
-
-const FlutterSecureStorage secureStorage = FlutterSecureStorage();
 Future<bool> checkUserLoggedIn() async {
   // Retrieve the token from secure storage
   final String? token = await secureStorage.read(key: 'accessToken');

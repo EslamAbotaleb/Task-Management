@@ -5,7 +5,7 @@ import 'package:task_mangement/core/theme/app_theme.dart';
 import '../bloc/auth/bloc/auth_bloc.dart';
 
 class FormLoginWidget extends StatefulWidget {
-  FormLoginWidget({super.key});
+  const FormLoginWidget({super.key});
 
   @override
   State<FormLoginWidget> createState() => _FormLoginWidgetState();
@@ -13,7 +13,6 @@ class FormLoginWidget extends StatefulWidget {
 
 class _FormLoginWidgetState extends State<FormLoginWidget> {
   final TextEditingController _usernameController = TextEditingController(text: 'emilys');
-
   final TextEditingController _passwordController = TextEditingController(text: 'emilyspass');
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
@@ -71,7 +70,6 @@ class _FormLoginWidgetState extends State<FormLoginWidget> {
                 },
               ),
             ),
-            // decoration: const InputDecoration(labelText: 'Password'),
             validator: (value) {
               if (value == null || value.isEmpty) {
                 return 'Please enter your password';
