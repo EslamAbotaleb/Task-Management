@@ -91,3 +91,6 @@ Authentication (Login functionality)
 
 Task List (CRUD operations)
 
+
+# Screenshots
+![Screenshot_1737157960](https://github.com/user-attachments/assets/c2446d1c-5580-432a-8d85-8e9907de7b6f)
