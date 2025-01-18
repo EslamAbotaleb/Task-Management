@@ -7,7 +7,6 @@ import 'package:task_mangement/modules/todos/domain/repositories/todo_repository
 
 import '../../../../core/error/exceptions.dart';
 import '../../../../core/network/abstract/network_abstract.dart';
-import '../../../../core/util/settings.dart';
 import '../models/todo_model.dart';
 
 typedef CRUDTodo = Future<Unit> Function();

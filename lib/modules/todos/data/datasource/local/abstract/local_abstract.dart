@@ -1,11 +1,4 @@
-import 'package:dartz/dartz.dart';
-
 import '../../../models/todo_model.dart';
-
-// abstract class TodoLocalDataSource {
-//   Future<List<TodoModel>> getCachedTodos();
-//   Future<Unit> cacheTodos(List<TodoModel> todoModels);
-// }
 
 abstract class TodoLocalDataSource {
   Future<void> addTodo(TodoModel todo);

@@ -1,11 +1,14 @@
 import 'package:path/path.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sqflite/sqflite.dart';
 
 import '../../models/todo_model.dart';
 import 'abstract/local_abstract.dart';
 
 class TodoLocalDataSourceImplementation implements TodoLocalDataSource {
-  TodoLocalDataSourceImplementation();
+  final SharedPreferences sharedPreferences;
+
+  TodoLocalDataSourceImplementation({required this.sharedPreferences});
 
   static const String _tableName = 'todos';
   static const String _dbName = 'todo_app.db';
@@ -56,7 +59,6 @@ class TodoLocalDataSourceImplementation implements TodoLocalDataSource {
       conflictAlgorithm: ConflictAlgorithm.replace,
     );
   }
-
   @override
   Future<void> deleteTodo(int id) async {
     final db = await database;
@@ -66,7 +68,6 @@ class TodoLocalDataSourceImplementation implements TodoLocalDataSource {
       whereArgs: [id],
     );
   }
-
   @override
   Future<void> updateTodo(TodoModel todo) async {
     final db = await database;
