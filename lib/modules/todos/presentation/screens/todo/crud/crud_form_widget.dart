@@ -39,45 +39,30 @@ class _FormWidgetState extends State<CRUDTodoWidget> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            TextFormField(
-              controller: _todoController,
-              maxLength: null,
-              decoration: InputDecoration(
-                labelText: "Todo",
-                filled: true, // Enables the filled background
-                fillColor: Colors.grey[200], // Adjust the color as needed
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(8),
-                  borderSide: const BorderSide(
-                    color: Colors.grey,
-                    width: 1.5, // Border style
+            Material(
+              elevation: 10.0,
+              borderRadius: BorderRadius.circular(10),
+              child: TextFormField(
+                controller: _todoController,
+                maxLength: null,
+                decoration: InputDecoration(
+                  hintText: 'Todo',
+                  hintStyle: const TextStyle(
+                      fontSize: 15.0,
+                      color: Color(0xffA9A9A9),
+                      fontWeight: FontWeight.w500),
+                  contentPadding: const EdgeInsets.all(15),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10),
                   ),
                 ),
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(8),
-                  borderSide: const BorderSide(
-                    color: Colors.grey,
-                    width: 1.5, // Default border
-                  ),
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(8),
-                  borderSide: const BorderSide(
-                    color: secondaryColor,
-                    width: 0, // On focus border
-                  ),
-                ),
-                contentPadding: const EdgeInsets.symmetric(
-                  vertical: 20, // Adjust vertical padding
-                  horizontal: 12, // Adjust horizontal padding
-                ),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter todo';
+                  }
+                  return null;
+                },
               ),
-              validator: (value) {
-                if (value == null || value.isEmpty) {
-                  return 'Please enter todo';
-                }
-                return null;
-              },
             ),
             const SizedBox(
               height: 16.0,
@@ -86,7 +71,9 @@ class _FormWidgetState extends State<CRUDTodoWidget> {
                 ? Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                     DeleteTodoBtnWidget(todoId: widget.todo?.id ?? 0,),
+                      DeleteTodoBtnWidget(
+                        todoId: widget.todo?.id ?? 0,
+                      ),
                       const SizedBox(
                         width: 16.0,
                       ),

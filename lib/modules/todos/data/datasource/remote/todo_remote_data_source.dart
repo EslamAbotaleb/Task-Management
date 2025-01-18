@@ -57,7 +57,7 @@ class TodoRemoteDataSourceImplementation implements TodoRemoteDataSource {
       Uri.parse("$BASE_URL/todos/$todoId"),
       body: body,
     );
-      logger.d("response:$response");
+    logger.d("response:$response");
     if (response.statusCode == 200) {
       return Future.value(unit);
     } else {
