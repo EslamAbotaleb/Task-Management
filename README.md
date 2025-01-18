@@ -1,4 +1,4 @@
-![Screenshot_1737159678](https://github.com/user-attachments/assets/0abca8d3-a9b7-4049-ab5e-3bb582d7d7db)# Flutter Task Management App
+# Flutter Task Management App
 
 Overview
 
