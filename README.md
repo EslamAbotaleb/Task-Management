@@ -4,7 +4,17 @@ Overview
 
 The Flutter Task Management App is a user-friendly application designed to help users manage their tasks efficiently. The app includes features such as user authentication, task management with full CRUD operations, pagination for handling large datasets, state management with Bloc, data persistence using SharedPreferences, and unit tests for authentication and task functionalities.
 
-Key Features
+# Project Structure
+This project follows Clean Architecture, a software design pattern that divides the codebase into different layers, each with distinct responsibilities. This approach improves maintainability, testability, and separation of concerns.
+
+# Overview of the Architecture
+The application is divided into three primary layers:
+
+Data Layer
+Domain Layer
+Presentation Layer
+Each layer communicates only with the adjacent layer, which helps keep the code modular and easier to maintain.
+# Key Features
 
 1. User Authentication
 
